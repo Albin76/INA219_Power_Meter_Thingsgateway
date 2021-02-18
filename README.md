@@ -9,6 +9,10 @@ http://www.robertovalgolio.com/sistemi-programmi/ecosystemofthings
 Name output to csv instead of txt. 
 Put Things gateway so that live serial output is inder screen for stability. 
 
-![alt text](https://github.com/Albin76/INA219_Power_Meter_Thingsgateway/tree/main/Images/Screen_Things_Gateway.JPG?raw=true)
+Move Things gateway so that resial output (marked 1) is "under" screen
+Start logg to file (2)
+Start logging serial (3)
 
-![Alt text](relative/path/to/Screen_Things_Gateway.JPG?raw=true "Title")
+When finished first unpress 3, wait for writing to file to stop (file size not increasing anymore). Then press 2. 
+
+![](Images/Screen_Things_Gateway.JPG?raw=true)
