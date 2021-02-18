@@ -9,4 +9,4 @@ http://www.robertovalgolio.com/sistemi-programmi/ecosystemofthings
 Name output to csv instead of txt. 
 Put Things gateway so that live serial output is inder screen for stability. 
 
-![alt text](https://github.com/Albin76/INA219_Power_Meter_Thingsgateway/tree/main/Images/main/Screen_Things_Gateway.jpg?raw=true)
+![alt text](https://github.com/Albin76/INA219_Power_Meter_Thingsgateway/tree/main/Images/Screen_Things_Gateway.jpg?raw=true)
