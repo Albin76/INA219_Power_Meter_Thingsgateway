@@ -22,6 +22,5 @@ When finished first unpress 3 and then wait for writing to file to stop (file si
 - Wemos GND -> Battery GND, INA219 GND and Sensor GND
 - Wemos D2 -> INA19 SDA
 - Wemos D1-> INA9 SCL
-- INA219 GND -> Battery GND and Sensor GND
 - INA219 V+ -> Battery PWR
 - INA219 V- -> Sensor PWR
