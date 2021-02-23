@@ -11,8 +11,10 @@
 
    Lolin D1 mini 80MHz Serial 115200: 1671 us to measure, 1860-1671=   us to send.
    Triggered instead of continuous takes 3768 us to measure, so slower! do not get duplicate readings with continuous do not get same reading twice.
-
-   Lolin32 lite 240MHz Serial 115200: 1820 us to measure, 1979-1820=   us to send. Why slower? 
+   
+   Lolin D1 mini 160MHz Serial 500000 and 2ms sampling: Worked quiet good. 2 out of 11000 was 4ms. 
+   
+   Lolin32 lite 240MHz Serial 115200: 1820 us to measure, 1979-1820=   us to send. Why slower?   
 */
 
 #include <Wire.h>
@@ -23,7 +25,7 @@ INA219_WE ina219(I2C_ADDRESS);
 
 unsigned long currentMillis =0;
 unsigned long previousMillis = 0;
-unsigned long interval = 3;  // Under 3 the recieving program crashes anyway.
+unsigned long interval = 2;  // Under 3 the recieving program crashes anyway.
 
 float shuntVoltage_mV = 0.0;
 float loadVoltage_V = 0.0;
@@ -65,7 +67,8 @@ void ina219values() {
 }
 
 void setup() {
-  Serial.begin(115200);
+  //Serial.begin(115200);
+  Serial.begin(500000);
   Wire.begin();  // Wemos D1 mini
   //Wire.begin(19,23);  // Lolin32 Lite
   if(!ina219.init()){
