@@ -1,7 +1,8 @@
 # INA219_Power_Meter_Thingsgateway
 INA219 Power Meter to Thingsgateway.
 
-Logg every 3ms! Sometimes 4ms.  
+Logg every 2ms (2ms, baud 500 000, CPU 160MHz)! Mostly 2ms but sometimes 4ms.  
+logging 3ms is more stable though. 
 
 Serial logger: 
 http://www.robertovalgolio.com/sistemi-programmi/ecosystemofthings
