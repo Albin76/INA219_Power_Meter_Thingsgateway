@@ -25,4 +25,3 @@ When finished first unpress 3 and then wait for writing to file to stop (file si
 - INA219 V+ -> Battery PWR
 - INA219 V- -> Sensor PWR
 
-![](Images/Board.jpg?raw=true)
