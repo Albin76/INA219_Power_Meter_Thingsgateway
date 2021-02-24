@@ -16,7 +16,7 @@ Start logging serial (3)
 
 When finished first unpress 3 and then wait for writing to file to stop (file size not increasing anymore). Then press 2. 
 
-![](Images/Screen_Things_Gateway.JPG?raw=true)
+<img src="Images/Screen_Things_Gateway.JPG" width="600">
 
 - Wemos 3.3V -> INA219 VCC
 - Wemos GND -> Battery GND, INA219 GND and Sensor GND
@@ -24,5 +24,5 @@ When finished first unpress 3 and then wait for writing to file to stop (file si
 - Wemos D1 -> INA9 SCL
 - INA219 V+ -> Battery PWR
 - INA219 V- -> Sensor PWR
-- 
-![](Images/Board.JPG?raw=true)
+
+<img src="Images/Board.JPG" width="600">
