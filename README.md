@@ -24,3 +24,5 @@ When finished first unpress 3 and then wait for writing to file to stop (file si
 - Wemos D1 -> INA9 SCL
 - INA219 V+ -> Battery PWR
 - INA219 V- -> Sensor PWR
+
+![](Images/Board.JPG?raw=true)
