@@ -21,8 +21,8 @@ When finished first unpress 3 and then wait for writing to file to stop (file si
 Connections: 
 - Wemos 3.3V -> INA219 VCC
 - Wemos GND -> Battery GND, INA219 GND and Sensor GND
-- Wemos D2 -> INA19 SDA
-- Wemos D1 -> INA9 SCL
+- Wemos D2 -> INA219 SDA
+- Wemos D1 -> INA219 SCL
 - INA219 V+ -> Battery PWR
 - INA219 V- -> Sensor PWR
 
