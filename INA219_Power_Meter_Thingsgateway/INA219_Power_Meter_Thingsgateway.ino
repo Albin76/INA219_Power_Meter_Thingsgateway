@@ -3,18 +3,19 @@
    http://www.robertovalgolio.com/sistemi-programmi/ecosystemofthings
 
    Old logger logged with Adafruit to SD-card. Approx 6-7ms between samples for 29 of them then one with 12-13ms due to buffer. 
-   This loggs new ina library and to csv to Things Gateway (way faster): 3-4ms for all! Under 3ms the recieving program crashes anyway.
+   This loggs new ina library and to csv to Things Gateway (way faster): 760us for measurement. But vat this rate the recieving program hangs sometime and some samples are linger. At 3ms it is fully stable.
    If lowering the program so that the live serial output is outside screen it is more stable. 
 
    If logging with micros instead:
    Serial.println(micros()-currentMillis);  // May not be inlcuded for ThingsGateway
 
-   Lolin D1 mini 80MHz Serial 115200: 1671 us to measure, 1860-1671=   us to send.
-   Triggered instead of continuous takes 3768 us to measure, so slower! do not get duplicate readings with continuous do not get same reading twice.
+   Tested setups: 
+   Lolin D1 mini  80MHz Serial 115200 Wire 100k: 1671 us to measure (1860 incl serial) (Measured with serialprint in code so not reliable)
+   Lolin D1 mini 160MHz Serial 500000 Wire 400k:  421 us to measure (140 per measurement) (760 incl serial). 
+   Lolin32 lite  240MHz Serial 115200 Wire 100k: 1820 us to measure (Measured with serialprint in code so not reliable) Why slower than D1 mini 80MHz?  
+
+   Triggered instead of continuous takes longer to measure! I do not get duplicate readings with continuous do not get same reading twice.
    
-   Lolin D1 mini 160MHz Serial 500000 and 2ms sampling: Worked quiet good. 2 out of 11000 was 4ms. 
-   
-   Lolin32 lite 240MHz Serial 115200: 1820 us to measure, 1979-1820=   us to send. Why slower?   
 */
 
 #include <Wire.h>
@@ -25,7 +26,10 @@ INA219_WE ina219(I2C_ADDRESS);
 
 unsigned long currentMillis =0;
 unsigned long previousMillis = 0;
-unsigned long interval = 2;  // Under 3 the recieving program crashes anyway.
+unsigned long interval = 600;  // Under 3 the recieving program crashes anyway.
+
+// Timer values
+unsigned long timemillis[5];
 
 float shuntVoltage_mV = 0.0;
 float loadVoltage_V = 0.0;
@@ -38,12 +42,16 @@ void ina219values() {
   //Serial.println(micros()-currentMillis);  // May not be inlcuded for ThingsGateway. Only for test of timing.
   //ina219.startSingleMeasurement(); // triggers single-shot measurement and waits until completed
   //Serial.println(micros()-currentMillis);  // May not be inlcuded for ThingsGateway. Only for test of timing.
+  // timemillis[0] = micros();
   shuntVoltage_mV = ina219.getShuntVoltage_mV();
+  // timemillis[1] = micros();
   busVoltage_V = ina219.getBusVoltage_V();
+  // timemillis[2] = micros();
   current_mA = ina219.getCurrent_mA();
+  // timemillis[3] = micros();
   //power_mW = ina219.getBusPower();
   loadVoltage_V  = busVoltage_V + (shuntVoltage_mV/1000);
-
+  // timemillis[4] = micros();
 
   /*
   Serial.print("Shunt Voltage [mV]: "); Serial.println(shuntVoltage_mV);
@@ -69,6 +77,7 @@ void ina219values() {
 void setup() {
   //Serial.begin(115200);
   Serial.begin(500000);
+  Wire.setClock(400000); // This reduced time considerably 1547us to 421us
   Wire.begin();  // Wemos D1 mini
   //Wire.begin(19,23);  // Lolin32 Lite
   if(!ina219.init()){
@@ -126,14 +135,20 @@ void setup() {
 }
 
 void loop() {
-  currentMillis = millis(); // use in actual program
-  //currentMillis = micros(); // to use when timing
+  //currentMillis = millis(); // use in actual program
+  currentMillis = micros(); // to use when timing
   if (currentMillis - previousMillis >= interval)
   {
    previousMillis = currentMillis;
 
    ina219values();
-
+/*
+   Serial.printf("Millis0: %lu\n", timemillis[0]);
+   Serial.printf("Millis1: %lu\n", timemillis[1]);
+   Serial.printf("Millis2: %lu\n", timemillis[2]);
+   Serial.printf("Millis3: %lu\n", timemillis[3]);      
+   Serial.printf("Millis4: %lu\n", timemillis[4]);
+*/
    //Serial.println(micros()-currentMillis);  // May not be inlcuded for ThingsGateway. Only for test of timing.
    Serial.print("INI,");
    //Serial.print(outputCount);
@@ -150,6 +165,8 @@ void loop() {
    Serial.print("\n");
    Serial.print("END");
    Serial.print("\n");
+
+
    //Serial.println(micros()-currentMillis);  // May not be inlcuded for ThingsGateway. Only for test of timing.
    //Serial.print("INI," + String(1) + "," + String(interval) + "\nLOG," + String(currentMillis) + "," + String(loadVoltage_V) + "," + String(current_mA)+ "\nEND\n");  // Slower
    //Serial.printf("INI,1,%i\nLOG,%u,%f,%f\nEND\n",interval,currentMillis,loadVoltage_V,current_mA); // Slowest
