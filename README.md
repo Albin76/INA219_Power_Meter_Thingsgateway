@@ -27,3 +27,13 @@ Connections:
 - INA219 V- -> Sensor PWR
 
 <img src="Images/Board.JPG" width="600">
+
+Comparison:
+
+<img src="Images/Comparison.JPG" width="300">
+
+Own measurement (This repo and 3.7V):
+<img src="Images/Own graph.JPG" width="1200">
+
+Measured with Power Profiler Kit II (3.7V):
+<img src="Images/Profiler.JPG" width="1200">
